@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: student_management
+
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/student_management'
+    username: postgres
+    password: password
+    driver-class: org.postgresql.Driver
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+server:
+  port: 8888
+
+
+
+
+application:
+  security:
+    jwt.secret_key: '${TOKEN_SECRET_KEY:EondyOft8N/rAkvz3Bj3rllj/B+xNHyuTXXcdiOW8faqwsdKovjqsAdvf4zejdCV}'
+
+token:
+  expiry:
+    date: '${TOKEN_EXPIRY_DATE:3600000}'
+
+
+
+admin:
+  password: '${ADMIN_PASSWORD:1234567}'
+  email: '${ADMIN_EMAIL:admin@gmail.com}'
+
+
+logging:
+  level:
+    root: info
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'

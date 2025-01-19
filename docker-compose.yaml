@@ -1,0 +1,33 @@
+version: "3"
+services:
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432" # PostgreSQL's default port
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=student_management
+    volumes:
+      - data:/var/lib/postgresql/data
+
+
+  students:
+    build: .
+#    restart: always
+    environment:
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:5432/student_management
+      - ADMIN_PASSWORD= 12345678 # you have to remove the password and email after the colon from the application file to make this take effect
+      - ADMIN_EMAIL= admin@gmail.com
+    depends_on:
+      - database
+
+    ports:
+      - 8888:8888
+
+volumes:
+  data:
+

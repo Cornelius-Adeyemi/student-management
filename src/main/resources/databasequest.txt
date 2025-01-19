@@ -1,0 +1,90 @@
+Database and sql questions
+
+
+Question 1
+
+If we have employees A, B, and C whose salaries are $100, $80, and $100 respectively, note that the second highest salary
+is $80 although there are two employees with a higher salary.
+
+SELECT DISTINCT(salary) FROM emp ORDER BY salary DESC LIMIT 1 OFFSET 1 ;(not correct)
+
+SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp);(not correct)
+
+SELECT salary FROM (SELECT DISTINCT salary FROM emp ORDER BY salary DESC LIMIT 2) AS emp ORDER BY salary LIMIT 1;(not correct)
+
+SELECT DISTINCT salary FROM (SELECT salary FROM emp ORDER BY salary DESC LIMIT 2) AS emp ORDER BY salary LIMIT 1;(not correct)
+
+SELECT salary FROM emp ORDER BY salary DESC OFFSET 1 LIMIT 1;(not correct)
+
+
+Question 2
+
+This is the query
+
+select country from city  c join games g on c.name = g.city;
+
+Question 3
+
+Left and right join is almost thesame.
+
+left join means pick everything from the left table and join with the right table but only join the rows on the right table
+that has same value on the column they are both joined.
+
+from the table below
+
+table 1
+
+games                             city
+
+yr     city               name        country
+
+2004   Athens            Sydney        Australia
+2008   Beijing           Athens        Greece
+2012   London            Beijing       China
+2032                      london       UK
+
+left join query
+
+Select * from games g left join city c on g.city = c.name;
+
+result
+
+ id      yr     city   name       country
+
+ 1     2004    Athens  Athens     Greece
+ 2    2008    Beijing  beijing    China
+ 3     2012    london  london    uk
+ 4    2032      null     null     null
+
+
+ right join
+
+ this is the opposite of left
+
+ query
+
+ Select * from games g right join city c on g.city = c.name;
+
+ result
+
+  id      yr     city   name       country
+
+  1     null    null  sydney     Austrialia
+  2    2004    Athens  Athens    greece
+  3     2008    beijing  beijing    china
+  4    2012      london     london     uk
+
+
+
+
+Question 4
+
+SELECT
+    userId,
+    AVG(duration) AS average_duration
+FROM
+    sessions
+GROUP BY
+    userId
+HAVING
+    COUNT(id) > 1;
